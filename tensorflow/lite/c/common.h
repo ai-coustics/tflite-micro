@@ -26,5 +26,6 @@ limitations under the License.
 #define TENSORFLOW_LITE_C_COMMON_H_
 
 #include "tensorflow/lite/core/c/common.h"
+typedef float float32_t;
 
 #endif  // TENSORFLOW_LITE_C_COMMON_H_
