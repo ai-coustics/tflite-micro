@@ -157,7 +157,7 @@ TfLiteStatus Relu6Eval(TfLiteContext* context, TfLiteNode* node) {
       out_data_ptr = tflite::micro::GetTensorData<int8_t>(output);
 
       err = xa_nn_vec_activation_min_max_8_8(out_data_ptr, inp_data_ptr,
-                                                     data.zero_int8, data.six_int8, flat_size);
+                                                     data.zero, data.six, flat_size);
       TF_LITE_ENSURE(context, err == 0);
 #else
       Relu6Quantized(data.zero_int8, data.six_int8,
