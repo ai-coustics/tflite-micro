@@ -72,7 +72,7 @@ TfLiteStatus UnpackImpl(TfLiteContext* context, TfLiteNode* node,
   return kTfLiteOk;
 }
 
-TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
+TfLiteStatus UnpackEval(TfLiteContext* context, TfLiteNode* node) {
   TfLiteUnpackParams* data =
       reinterpret_cast<TfLiteUnpackParams*>(node->builtin_data);
 
@@ -85,6 +85,9 @@ TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
     }
     case kTfLiteInt32: {
       return UnpackImpl<int32_t>(context, node, input, data->num, data->axis);
+    }
+    case kTfLiteInt16: {
+      return UnpackImpl<int16_t>(context, node, input, data->num, data->axis);
     }
     case kTfLiteInt8: {
       return UnpackImpl<int8_t>(context, node, input, data->num, data->axis);
@@ -102,7 +105,7 @@ TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
 }  // namespace
 
 TFLMRegistration Register_UNPACK() {
-  return tflite::micro::RegisterOp(nullptr, nullptr, Eval);
+  return tflite::micro::RegisterOp(nullptr, nullptr, UnpackEval);
 }
 
 }  // namespace tflite

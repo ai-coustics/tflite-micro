@@ -69,7 +69,7 @@ TfLiteStatus PackImpl(TfLiteContext* context, TfLiteNode* node,
   return kTfLiteOk;
 }
 
-TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
+TfLiteStatus PackEval(TfLiteContext* context, TfLiteNode* node) {
   const TfLitePackParams* data =
       reinterpret_cast<TfLitePackParams*>(node->builtin_data);
 
@@ -84,6 +84,10 @@ TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
     case kTfLiteInt8: {
       return PackImpl<int8_t>(context, node, output, data->values_count,
                               data->axis);
+    }
+    case kTfLiteInt16: {
+      return PackImpl<int16_t>(context, node, output, data->values_count,
+                               data->axis);
     }
     case kTfLiteInt32: {
       return PackImpl<int32_t>(context, node, output, data->values_count,
@@ -106,7 +110,7 @@ TfLiteStatus Eval(TfLiteContext* context, TfLiteNode* node) {
 }  // namespace
 
 TFLMRegistration Register_PACK() {
-  return tflite::micro::RegisterOp(nullptr, nullptr, Eval);
+  return tflite::micro::RegisterOp(nullptr, nullptr, PackEval);
 }
 
 }  // namespace tflite
