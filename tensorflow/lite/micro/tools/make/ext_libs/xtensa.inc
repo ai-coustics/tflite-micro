@@ -83,7 +83,8 @@ else ifeq ($(TARGET_ARCH), hifi5)
     $(shell find $(NDSPLIB_PATH)/library/fft/fft -name "*.c") \
     $(shell find $(NDSPLIB_PATH)/library/fft/fft_ie -name "*.c") \
     $(shell find $(NDSPLIB_PATH)/library/fft/fft_ief -name "*.c") \
-    $(shell find $(NDSPLIB_PATH)/library/twiddles -name "*.c")
+    $(shell find $(NDSPLIB_PATH)/library/twiddles -name "*.c") \
+    $(shell find $(NDSPLIB_PATH)/library/vector -name "*.c")
 
   EXCLUDED_NNLIB_SRCS = \
     $(NNLIB_PATH)/algo/layers/cnn/src/xa_nn_cnn_api.c \
