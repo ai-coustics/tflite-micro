@@ -20,6 +20,7 @@ limitations under the License.
 #include "tensorflow/lite/kernels/internal/compatibility.h"
 #include "tensorflow/lite/micro/flatbuffer_utils.h"
 #include "tensorflow/lite/micro/memory_helpers.h"
+#include "tensorflow/lite/micro/micro_context.h"
 #include "tensorflow/lite/micro/micro_log.h"
 #include "tensorflow/lite/micro/micro_profiler.h"
 #include "tensorflow/lite/schema/schema_generated.h"
@@ -200,8 +201,10 @@ TfLiteStatus MicroInterpreterGraph::InvokeSubgraph(int subgraph_idx) {
     allocator_->ResetTempAllocations();
 
     if (invoke_status != kTfLiteOk) {
-      MicroPrintf("Node %s (number %d) failed to invoke with status %d",
-                  OpNameFromRegistration(registration), i, invoke_status);
+      if (invoke_status != kTfLiteAbort) {
+        MicroPrintf("Node %s (number %d) failed to invoke with status %d",
+                    OpNameFromRegistration(registration), i, invoke_status);
+      }
       return invoke_status;
     }
   }
