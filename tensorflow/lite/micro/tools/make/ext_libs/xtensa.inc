@@ -80,9 +80,12 @@ else ifeq ($(TARGET_ARCH), hifi5)
 
   # The NDSP library has a lot of file. Add as needed.
   THIRD_PARTY_KERNEL_CC_SRCS += \
+    $(shell find $(NDSPLIB_PATH)/library/complexf -name "*.c") \
     $(shell find $(NDSPLIB_PATH)/library/fft/fft -name "*.c") \
     $(shell find $(NDSPLIB_PATH)/library/fft/fft_ie -name "*.c") \
     $(shell find $(NDSPLIB_PATH)/library/fft/fft_ief -name "*.c") \
+    $(shell find $(NDSPLIB_PATH)/library/mathf -name "*.c") \
+    $(shell find $(NDSPLIB_PATH)/library/tables -name "*.c") \
     $(shell find $(NDSPLIB_PATH)/library/twiddles -name "*.c") \
     $(shell find $(NDSPLIB_PATH)/library/vector -name "*.c")
 
@@ -103,7 +106,6 @@ else ifeq ($(TARGET_ARCH), hifi5)
     -I$(NNLIB_PATH)/include/nnlib/ \
     -I$(NNLIB_PATH)/include/ \
     -I$(NNLIB_PATH)/algo/common/include/ \
-    -I$(NNLIB_PATH)/algo/ndsp/hifi5/include/ \
     -I$(NDSPLIB_PATH)/library/include/ \
     -I$(NDSPLIB_PATH)/library/include_private/
 
@@ -146,9 +148,13 @@ else ifeq ($(TARGET_ARCH), $(filter $(TARGET_ARCH), hifi4 hifi4_internal hifi3 h
 
   # The NDSP library has a lot of file. Add as needed.
   THIRD_PARTY_KERNEL_CC_SRCS += \
+    $(shell find $(NDSPLIB_PATH)/library/complexf -name "*.c") \
     $(shell find $(NDSPLIB_PATH)/library/fft/fft -name "*.c") \
     $(shell find $(NDSPLIB_PATH)/library/fft/fft_ie -name "*.c") \
     $(shell find $(NDSPLIB_PATH)/library/fft/fft_ief -name "*.c") \
+    $(shell find $(NDSPLIB_PATH)/library/math -name "*.c") \
+    $(shell find $(NDSPLIB_PATH)/library/mathf -name "*.c") \
+    $(shell find $(NDSPLIB_PATH)/library/tables -name "*.c") \
     $(shell find $(NDSPLIB_PATH)/library/twiddles -name "*.c") \
     $(shell find $(NDSPLIB_PATH)/library/vector -name "*.c")
 
@@ -177,7 +183,6 @@ else ifeq ($(TARGET_ARCH), $(filter $(TARGET_ARCH), hifi4 hifi4_internal hifi3 h
     -I$(NNLIB_PATH)/include/nnlib/ \
     -I$(NNLIB_PATH)/include/ \
     -I$(NNLIB_PATH)/algo/common/include/ \
-    -I$(NNLIB_PATH)/algo/ndsp/hifi4/include/ \
     -I$(NDSPLIB_PATH)/library/include/ \
     -I$(NDSPLIB_PATH)/library/include_private/
 
