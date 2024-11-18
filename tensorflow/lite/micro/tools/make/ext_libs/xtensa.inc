@@ -87,7 +87,8 @@ else ifeq ($(TARGET_ARCH), hifi5)
     $(shell find $(NDSPLIB_PATH)/library/mathf -name "*.c") \
     $(shell find $(NDSPLIB_PATH)/library/tables -name "*.c") \
     $(shell find $(NDSPLIB_PATH)/library/twiddles -name "*.c") \
-    $(shell find $(NDSPLIB_PATH)/library/vector -name "*.c")
+    $(shell find $(NDSPLIB_PATH)/library/vector -name "*.c") \
+    $(shell find $(NDSPLIB_PATH)/library/vectorf -name "*.c")
 
   EXCLUDED_NNLIB_SRCS = \
     $(NNLIB_PATH)/algo/layers/cnn/src/xa_nn_cnn_api.c \
@@ -156,7 +157,8 @@ else ifeq ($(TARGET_ARCH), $(filter $(TARGET_ARCH), hifi4 hifi4_internal hifi3 h
     $(shell find $(NDSPLIB_PATH)/library/mathf -name "*.c") \
     $(shell find $(NDSPLIB_PATH)/library/tables -name "*.c") \
     $(shell find $(NDSPLIB_PATH)/library/twiddles -name "*.c") \
-    $(shell find $(NDSPLIB_PATH)/library/vector -name "*.c")
+    $(shell find $(NDSPLIB_PATH)/library/vector -name "*.c") \
+    $(shell find $(NDSPLIB_PATH)/library/vectorf -name "*.c")
 
   EXCLUDED_NNLIB_SRCS = \
     $(NNLIB_PATH)/algo/layers/cnn/src/xa_nn_cnn_api.c \
