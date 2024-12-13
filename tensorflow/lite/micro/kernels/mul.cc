@@ -29,6 +29,7 @@ limitations under the License.
 namespace tflite {
 
 TfLiteStatus MulEval(TfLiteContext* context, TfLiteNode* node) {
+  int err;
   TFLITE_DCHECK(node->builtin_data != nullptr);
   auto* params = reinterpret_cast<TfLiteMulParams*>(node->builtin_data);
 
@@ -46,7 +47,8 @@ TfLiteStatus MulEval(TfLiteContext* context, TfLiteNode* node) {
     case kTfLiteInt8:
     case kTfLiteInt16:
     case kTfLiteInt32:
-      EvalMulQuantizedReference(context, node, data, input1, input2, output);
+      err = EvalMulQuantizedReference(context, node, data, input1, input2, output);
+      TF_LITE_ENSURE(context, err == 0);
       break;
     case kTfLiteFloat32:
       EvalMulFloatReference(context, node, params, data, input1, input2,

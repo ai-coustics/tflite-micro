@@ -85,7 +85,7 @@ TfLiteStatus EvalMulQuantizedHiFi(TfLiteContext* context,
           tflite::micro::GetTensorData<int16_t>(input2),
           extended_input2_shape.DimsData());
 
-      TF_LITE_ENSURE(context, err == 0);
+      TF_LITE_ENSURE_EQ(context, err, 0);
   }
   return kTfLiteOk;
 }
@@ -120,6 +120,7 @@ TfLiteStatus EvalMulFloatHiFi(TfLiteContext* context, TfLiteNode* node,
 }
 
 TfLiteStatus MulEval(TfLiteContext* context, TfLiteNode* node) {
+  int err;
   TFLITE_DCHECK(node->builtin_data != nullptr);
   auto* params = reinterpret_cast<TfLiteMulParams*>(node->builtin_data);
 
@@ -157,20 +158,25 @@ TfLiteStatus MulEval(TfLiteContext* context, TfLiteNode* node) {
     case kTfLiteInt8:
     case kTfLiteInt16:
 #if defined(HIFI4) || defined(HIFI5)
-      EvalMulQuantizedHiFi(context, node, data, input1, input2, output);
+      err = EvalMulQuantizedHiFi(context, node, data, input1, input2, output);
+      TF_LITE_ENSURE(context, err == 0);
 #else
-      EvalMulQuantizedReference(context, node, data, input1, input2, output);
+      err = EvalMulQuantizedReference(context, node, data, input1, input2, output);
+      TF_LITE_ENSURE(context, err == 0);
 #endif
       break;
     case kTfLiteInt32:
-        EvalMulQuantizedReference(context, node, data, input1, input2, output);
+        err = EvalMulQuantizedReference(context, node, data, input1, input2, output);
+        TF_LITE_ENSURE(context, err == 0);
       break;
     case kTfLiteFloat32:
 #if HIFI_VFPU 
-      if (!need_broadcast) 
-        EvalMulFloatHiFi(context, node, params, data, input1, input2, output);
-      else
+      if (!need_broadcast) {
+        err = EvalMulFloatHiFi(context, node, params, data, input1, input2, output);
+        TF_LITE_ENSURE(context, err == 0);
+      } else {
         EvalMulFloatReference(context, node, params, data, input1, input2, output);
+      }
 #else
       EvalMulFloatReference(context, node, params, data, input1, input2, output);
 #endif
